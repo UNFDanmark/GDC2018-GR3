@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - Water
+  - Fish
+  - Platform
   layers:
   - Default
   - TransparentFX
@@ -16,12 +18,12 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Players
+  - Fish
+  - InvisibleWalls
+  - MeleeFish
+  - Ground
+  - Platform
   - 
   - 
   - 
