@@ -19,9 +19,9 @@ public class IsStanding : MonoBehaviour {
 
     void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag.ToLower() == "ground")
+        if (collision.gameObject.tag == "Platform" || collision.gameObject.tag == "Fish")
         {
-            playermovement.grounded = true;
+            playermovement.grounded++;
             playermovement.canAirjump = true;
         }
         else if (collision.gameObject.tag.ToLower() == "water" && debugging)
@@ -32,6 +32,6 @@ public class IsStanding : MonoBehaviour {
 
     private void OnTriggerExit(Collider bye)
     {
-        if(bye.gameObject.tag.ToLower() == "ground") playermovement.grounded = false;
+        if(bye.gameObject.tag == "Platform") playermovement.grounded--;
     }
 }
