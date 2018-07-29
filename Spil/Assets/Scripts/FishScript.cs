@@ -40,16 +40,19 @@ public class FishScript : MonoBehaviour {
             pickUpAble = true;
         }
         if (collision.gameObject.tag == "Player")
-        {
-            if (pickUpAble == true && collision.gameObject.GetComponent<PlayerMovement>().hasFish == false)
-            {
-                Destroy(gameObject);
-                collision.gameObject.GetComponent<PlayerMovement>().hasFish = true;
-            }
-            else if (flying)
+        {if (flying)
             {
                 collision.gameObject.GetComponent<PlayerMovement>().Knockback(5, direction);
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (pickUpAble && collision.gameObject.tag == "Player" && collision.GetComponentInParent<PlayerMovement>().hasFish == false)
+        {
+            collision.GetComponentInParent<PlayerMovement>().hasFish = true;
+            Destroy(gameObject);
         }
     }
 
