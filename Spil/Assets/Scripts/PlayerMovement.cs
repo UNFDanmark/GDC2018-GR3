@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     public float fishMoveSpeed = 5;
     public float fishSpeedUp = 1.5f;
     public float damageMultiplier = 1.01f;
+    public float defaultKnockbackTimer;
+    float localKnockbackTimer;
     public int grounded = 0;
     public int damageTaken = 0;
     public int PlayerID;
@@ -77,24 +79,19 @@ public class PlayerMovement : MonoBehaviour
 
     void Move(float axis, float accelSpeed)
     {
-        /*{
-            axis *= (1 + (MaxSpeed - rigidBody.velocity.x) * 0.1f);
-        }*/
-        if (axis == 0) axis = -(rigidBody.velocity.x * 1);
-        rigidBody.velocity = new Vector3(rigidBody.velocity.x + (axis * accelSpeed), rigidBody.velocity.y, rigidBody.velocity.z);
+        float xChange = axis * accelSpeed;
+        if (rigidBody.velocity.x > MaxSpeed || rigidBody.velocity.x < -MaxSpeed)
+        {
+            xChange = 0;
+        }
+        if (axis == 0) xChange = -(rigidBody.velocity.x * 0.3f);
 
-        if (rigidBody.velocity.x > MaxSpeed)
-        {
-            rigidBody.velocity = new Vector3(MaxSpeed, rigidBody.velocity.y, rigidBody.velocity.z);
-        }
-        if (rigidBody.velocity.x < -MaxSpeed)
-        {
-            rigidBody.velocity = new Vector3(-MaxSpeed, rigidBody.velocity.y, rigidBody.velocity.z);
-        }
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x + xChange, rigidBody.velocity.y, rigidBody.velocity.z);
     }
 
     void Jump()
     {
+        canAirjump = true;
         rigidBody.velocity = new Vector3 (rigidBody.velocity.x, jumpHeight , rigidBody.velocity.z);
     }
 
@@ -123,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
         int xModifyer = 1;
         if (direction == "left") xModifyer = -1;
         float knockbackMultiplier = (damageTaken + 1) * damageMultiplier;
-        Vector3 knockbackVector = new Vector3(10 * xModifyer, 1, 0) * knockbackMultiplier * strength;
+        Vector3 knockbackVector = new Vector3(1 * xModifyer, 0.2f, 0) * knockbackMultiplier * strength;
         
         rigidBody.velocity = knockbackVector;
 
