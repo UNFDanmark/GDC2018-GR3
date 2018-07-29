@@ -14,12 +14,12 @@ public class IsStanding : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (playermovement.grounded > 0) onGround = true;
 	}
 
     void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Platform" || collision.gameObject.tag == "Fish")
+        if (collision.gameObject.tag == "Platform")
         {
             playermovement.grounded++;
             playermovement.canAirjump = true;
