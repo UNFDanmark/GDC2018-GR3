@@ -18,19 +18,21 @@ public class PlayerMovement : MonoBehaviour
     public float fishMoveSpeed = 5;
     public float fishSpeedUp = 1.5f;
     public float damageMultiplier = 1.01f;
-    public float defaultKnockbackTimer;
-    float localKnockbackTimer;
+    public float handFishDistance = 0.65f;
     public int grounded = 0;
     public int damageTaken = 0;
     public int PlayerID;
-    public string lastDirection = "none";
+    public string lastDirection = "right";
     public KeyCode throwButton = KeyCode.Comma;
     public KeyCode hitButton = KeyCode.Period;
     public bool hasFish = true;
     public bool canAirjump = true;
+    public bool stunned = false;
+    public float stunHeight = 100;
 
     // Use this for initialization
     void Start () {
+        //Players look towards the middle when spawning
         if (rigidBody.transform.position.x > 0) lastDirection = "right";
         else lastDirection = "left";
 	}
@@ -39,18 +41,22 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Set lastDirection to "left" or "right" when the buttons are pressed
         lastDirection = GetDirection(Input.GetAxis("Horizontal" + PlayerID));
+        //Make handFish point the right direction
         if (lastDirection == "right") meleeFish.transform.localPosition = new Vector3(0.65f, 0, 0);
         else meleeFish.transform.localPosition = new Vector3(-0.65f, 0, 0);
+        //Show your fishes!
         if (hasFish) seeFish.enabled = true;
         else seeFish.enabled = false;
+        //Throw fish if ya wanna
         if (Input.GetKeyDown(throwButton))
         {
             Throw();
         }
 
-
-        if (Input.GetButtonDown("Jump" + PlayerID))
+        //Jump if you can and want
+        if (Input.GetButtonDown("Jump" + PlayerID) && stunned == false)
         {
             //First jump
             if (grounded > 0) Jump();
@@ -63,10 +69,20 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
+    
     private void FixedUpdate()
     {
-        Move(Input.GetAxis("Horizontal" + PlayerID), acceleration);
+        if (stunned)
+        {
+            if (rigidBody.position.y < stunHeight || grounded > 0)
+            {
+                stunned = false;
+            }
+        }
+        else
+        {
+            Move(Input.GetAxis("Horizontal" + PlayerID), acceleration);
+        }
     }
     
 
@@ -110,9 +126,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Hit()   //REMEMBER DIS!
+    void Hit()
     {
-
+        
     }
 
     public void Knockback(float strength, string direction)
@@ -120,9 +136,10 @@ public class PlayerMovement : MonoBehaviour
         int xModifyer = 1;
         if (direction == "left") xModifyer = -1;
         float knockbackMultiplier = (damageTaken + 1) * damageMultiplier;
-        Vector3 knockbackVector = new Vector3(1 * xModifyer, 0.2f, 0) * knockbackMultiplier * strength;
+        Vector3 knockbackVector = new Vector3(1 * xModifyer, 0.3f, 0) * knockbackMultiplier * strength;
         
         rigidBody.velocity = knockbackVector;
-
+        stunned = true;
+        stunHeight = rigidBody.position.y;
     }
 }
