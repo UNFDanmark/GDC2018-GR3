@@ -162,14 +162,15 @@ MonoBehaviour:
   seeFish: {fileID: 524297506}
   touchFish: {fileID: 524297505}
   acceleration: 1
-  MaxSpeed: 6.5
-  jumpHeight: 7.5
-  secondJumpMultiplier: 0.6
+  MaxSpeed: 6
+  jumpHeight: 8
+  secondJumpMultiplier: 0.8
   fishOffset: 0.2
   fishMoveSpeed: 5
   fishSpeedUp: 1.5
   damageMultiplier: 1.01
-  grounded: 1
+  handFishDistance: 0.65
+  grounded: 0
   damageTaken: 0
   PlayerID: 2
   lastDirection: none
@@ -177,6 +178,8 @@ MonoBehaviour:
   hitButton: 306
   hasFish: 1
   canAirjump: 1
+  stunned: 0
+  stunHeight: 100
 --- !u!54 &151878386
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1060,14 +1063,15 @@ MonoBehaviour:
   seeFish: {fileID: 654688560}
   touchFish: {fileID: 654688559}
   acceleration: 1
-  MaxSpeed: 6.5
-  jumpHeight: 7.5
-  secondJumpMultiplier: 0.6
+  MaxSpeed: 6
+  jumpHeight: 8
+  secondJumpMultiplier: 0.8
   fishOffset: 0.2
   fishMoveSpeed: 5
   fishSpeedUp: 1.5
   damageMultiplier: 1.01
-  grounded: 1
+  handFishDistance: 0.65
+  grounded: 0
   damageTaken: 0
   PlayerID: 1
   lastDirection: none
@@ -1075,6 +1079,8 @@ MonoBehaviour:
   hitButton: 46
   hasFish: 1
   canAirjump: 1
+  stunned: 0
+  stunHeight: 100
 --- !u!54 &748487101
 Rigidbody:
   m_ObjectHideFlags: 0
