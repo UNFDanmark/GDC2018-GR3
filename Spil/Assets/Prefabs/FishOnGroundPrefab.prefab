@@ -24,9 +24,9 @@ GameObject:
   - component: {fileID: 136694009245803088}
   - component: {fileID: 136090137863603514}
   - component: {fileID: 54787960472730994}
-  - component: {fileID: 114685317699385752}
-  m_Layer: 10
-  m_Name: FishPrefab
+  - component: {fileID: 114050662213769320}
+  m_Layer: 15
+  m_Name: FishOnGroundPrefab
   m_TagString: Fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,7 +102,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114685317699385752
+--- !u!114 &114050662213769320
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1613583728827878}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0089c016e2891b44a723bf1348867a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c22581a638b8da4f9a71ceeb52b2dfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fishRigidbody: {fileID: 54787960472730994}
@@ -119,8 +119,7 @@ MonoBehaviour:
   pickUpAble: 1
   flying: 1
   direction: 
-  fishOnGround: {fileID: 1613583728827878, guid: 1501d96fe0c62dd459ba518584053c97,
-    type: 2}
+  fishOnGround: {fileID: 0}
 --- !u!136 &136090137863603514
 CapsuleCollider:
   m_ObjectHideFlags: 1

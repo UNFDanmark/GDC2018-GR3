@@ -96,11 +96,14 @@ public class PlayerMovement : MonoBehaviour
     void Move(float axis, float accelSpeed)
     {
         float xChange = axis * accelSpeed;
-        if (rigidBody.velocity.x > MaxSpeed || rigidBody.velocity.x < -MaxSpeed)
+        //Checks if accelleration exceeds maximum in the given direction
+        if ((rigidBody.velocity.x > MaxSpeed && xChange > 0) || (rigidBody.velocity.x < -MaxSpeed && xChange < 0))
         {
             xChange = 0;
         }
-        if (axis == 0) xChange = -(rigidBody.velocity.x * 0.3f);
+        if (axis == 0) {
+            xChange = -(rigidBody.velocity.x * 0.3f);
+        }
 
         rigidBody.velocity = new Vector3(rigidBody.velocity.x + xChange, rigidBody.velocity.y, rigidBody.velocity.z);
     }
