@@ -11,9 +11,12 @@ public class FishScript : MonoBehaviour {
     public bool pickUpAble = true;
     public bool flying = true;
     public string direction = "";
+    public GameObject fishOnGround;
+    public GameObject fishSpawner;
 
     void Awake()
     {
+        fishSpawner = GameObject.FindGameObjectWithTag("Spawner");
         fishRigidbody = GetComponent<Rigidbody>();
         if (fishRigidbody.velocity.x >= 0) direction = "right";
         else direction = "left";
@@ -34,21 +37,25 @@ public class FishScript : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.tag == "Water")
+        {
+            Destroy(gameObject);
+            fishSpawner.GetComponent<FishSpawnerScript>().fishOnScreen--;
+        }
         if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Fish")
         {
             flying = false;
+            Destroy(gameObject);
+            GameObject newFishOnGround = Instantiate(fishOnGround, transform.position, transform.rotation);
+            newFishOnGround.GetComponent<Rigidbody>().velocity = fishRigidbody.velocity;    
             pickUpAble = true;
         }
         if (collision.gameObject.tag == "Player")
-        {
-            if (pickUpAble == true && collision.gameObject.GetComponent<PlayerMovement>().hasFish == false)
+        {if (flying)
             {
-                Destroy(gameObject);
-                collision.gameObject.GetComponent<PlayerMovement>().hasFish = true;
-            }
-            else if (flying)
-            {
+                flying = false;
                 collision.gameObject.GetComponent<PlayerMovement>().Knockback(5, direction);
+                collision.gameObject.GetComponent<PlayerMovement>().damageTaken += 0.1f;
             }
         }
     }

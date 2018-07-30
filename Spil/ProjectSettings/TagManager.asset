@@ -8,6 +8,7 @@ TagManager:
   - Water
   - Fish
   - Platform
+  - Spawner
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - MeleeFish
   - Ground
   - Platform
-  - 
+  - FishOnGround
   - 
   - 
   - 
