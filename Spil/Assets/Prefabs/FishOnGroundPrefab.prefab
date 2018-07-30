@@ -119,7 +119,8 @@ MonoBehaviour:
   pickUpAble: 1
   flying: 1
   direction: 
-  fishOnGround: {fileID: 0}
+  fishOnGround: {fileID: 1613583728827878}
+  fishSpawner: {fileID: 0}
 --- !u!136 &136090137863603514
 CapsuleCollider:
   m_ObjectHideFlags: 1

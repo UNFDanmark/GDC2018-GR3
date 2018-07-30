@@ -6,9 +6,11 @@ public class FreshFishScript : MonoBehaviour {
 
     public bool flying = true;
     public Rigidbody thisFish;
+    public GameObject fishSpawner;
 
     void Awake()
     {
+        fishSpawner = GameObject.FindGameObjectWithTag("Spawner");
         thisFish = GetComponent<Rigidbody>();
     }
 
@@ -24,7 +26,7 @@ public class FreshFishScript : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.tag == "Player" && (collider.GetComponentInParent<PlayerMovement>().hasFish == false || GetComponent<PlayerMovement>().hasFish == false))
+        if (collider.tag == "Player" && ((collider.GetComponentInParent<PlayerMovement>().hasFish == false) || GetComponent<PlayerMovement>().hasFish == false))
         {
             collider.GetComponentInParent<PlayerMovement>().hasFish = true;
             Destroy(gameObject);
@@ -34,5 +36,10 @@ public class FreshFishScript : MonoBehaviour {
     void OnCollisionEnter(Collision collision)
     {
         flying = false;
+        if (collision.gameObject.tag == "Water")
+        {
+            fishSpawner.GetComponent<FishSpawnerScript>().fishOnScreen--;
+            Destroy(gameObject);
+        }
     }
 }

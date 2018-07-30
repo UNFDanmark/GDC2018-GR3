@@ -21,9 +21,9 @@ public class MeleeFishScript : MonoBehaviour {
         //If touching a player that is not you and hitting with fish
         if (((otherPlayer.name == "Player 1" || otherPlayer.name == "Player 2") && otherPlayer.name != transform.parent.name) && hitting == true)
         {
-            print("hitting");
             string playerDirection = GetComponentInParent<PlayerMovement>().lastDirection;
             otherPlayer.GetComponent<PlayerMovement>().Knockback(fishKnockback, playerDirection);
+            otherPlayer.GetComponent<PlayerMovement>().damageTaken += 0.03f;
             hitting = false;
         }
     }

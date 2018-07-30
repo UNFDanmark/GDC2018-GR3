@@ -8,6 +8,7 @@ TagManager:
   - Water
   - Fish
   - Platform
+  - Spawner
   layers:
   - Default
   - TransparentFX

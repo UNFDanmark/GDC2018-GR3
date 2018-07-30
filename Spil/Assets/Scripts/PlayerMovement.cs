@@ -19,9 +19,10 @@ public class PlayerMovement : MonoBehaviour
     public float fishSpeedUp = 1.5f;
     public float damageMultiplier = 1.01f;
     public float handFishDistance = 0.65f;
+    public float damageTaken = 0;
     public int grounded = 0;
-    public int damageTaken = 0;
     public int PlayerID;
+    public int lives = 3;
     public string lastDirection = "right";
     public KeyCode throwButton = KeyCode.Comma;
     public KeyCode hitButton = KeyCode.Period;
@@ -30,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     public bool stunned = false;
     public float timeSinceStunned = 0;
     public float stunHeight = 100;
-    public float hitTimerStandard = 0.5f; //Remember that this is depending on the animation
+    public float hitTimerStandard = 0.3f; //Remember that this is depending on the animation
     public float hitTimer = 0f; 
 
     // Use this for initialization
@@ -72,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if(hitTimer <= 0)
+        if(hitTimer <= 0 && hasFish)
         {
             if (Input.GetKeyDown(hitButton))
             {
@@ -92,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
         if (stunned)
         {
             timeSinceStunned += Time.deltaTime;
-            if (rigidBody.position.y < stunHeight || (grounded > 0 && timeSinceStunned > 0.1))
+            if (rigidBody.position.y < stunHeight || (grounded > 0 && timeSinceStunned > 0.2))
             {
                 stunned = false;
             }
