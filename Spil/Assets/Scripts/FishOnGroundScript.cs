@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FishScript : MonoBehaviour {
+public class FishOnGroundScript : MonoBehaviour {
 
     public Rigidbody fishRigidbody;
 
@@ -33,22 +33,12 @@ public class FishScript : MonoBehaviour {
         else direction = "left";
     }
 
-    void OnCollisionEnter(Collision collision)
+       private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Fish")
+        if (pickUpAble && collision.gameObject.tag == "Player" && collision.GetComponentInParent<PlayerMovement>().hasFish == false)
         {
-            flying = false;
+            collision.GetComponentInParent<PlayerMovement>().hasFish = true;
             Destroy(gameObject);
-            GameObject newFishOnGround = Instantiate(fishOnGround, transform.position, transform.rotation);
-            newFishOnGround.GetComponent<Rigidbody>().velocity = fishRigidbody.velocity;    
-            pickUpAble = true;
-        }
-        if (collision.gameObject.tag == "Player")
-        {if (flying)
-            {
-                flying = false;
-                collision.gameObject.GetComponent<PlayerMovement>().Knockback(5, direction);
-            }
         }
     }
 
