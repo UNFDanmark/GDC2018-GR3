@@ -28,7 +28,10 @@ public class PlayerMovement : MonoBehaviour
     public bool hasFish = true;
     public bool canAirjump = true;
     public bool stunned = false;
+    public float timeSinceStunned = 0;
     public float stunHeight = 100;
+    public float hitTimerStandard = 0.5f; //Remember that this is depending on the animation
+    public float hitTimer = 0f; 
 
     // Use this for initialization
     void Start () {
@@ -68,13 +71,28 @@ public class PlayerMovement : MonoBehaviour
                 rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y * secondJumpMultiplier, rigidBody.velocity.z);
             }
         }
+
+        if(hitTimer <= 0)
+        {
+            if (Input.GetKeyDown(hitButton))
+            {
+                hitTimer = hitTimerStandard;
+                Hit();
+                meleeFish.GetComponent<MeleeFishScript>().hitting = true;
+            }
+            else meleeFish.GetComponent<MeleeFishScript>().hitting = false;
+        }
+        else hitTimer -= Time.fixedDeltaTime;
+       
     }
     
+
     private void FixedUpdate()
     {
         if (stunned)
         {
-            if (rigidBody.position.y < stunHeight || grounded > 0)
+            timeSinceStunned += Time.deltaTime;
+            if (rigidBody.position.y < stunHeight || (grounded > 0 && timeSinceStunned > 0.1))
             {
                 stunned = false;
             }
@@ -123,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
             float x;
             if (lastDirection == "right") x = 1;
             else x = -1;
-            thrownFish.transform.position = transform.position + new Vector3(x * 0.65f, 0.1f, 0);
+            thrownFish.transform.position = transform.position + new Vector3(x * handFishDistance, 0.1f, 0);
             thrownFish.GetComponent<Rigidbody>().velocity = rigidBody.velocity + new Vector3(fishMoveSpeed * x, fishSpeedUp, 0);
             thrownFish.GetComponent<FishScript>().pickUpAble = false;
         }
@@ -131,7 +149,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Hit()
     {
-        
+        meleeFish.GetComponent<MeleeFishScript>().hitting = true;
     }
 
     public void Knockback(float strength, string direction)
@@ -141,7 +159,7 @@ public class PlayerMovement : MonoBehaviour
         float knockbackMultiplier = (damageTaken + 1) * damageMultiplier;
         Vector3 knockbackVector = new Vector3(1 * xModifyer, 0.3f, 0) * knockbackMultiplier * strength;
         
-        rigidBody.velocity = knockbackVector;
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.x * 0.5f, rigidBody.velocity.z) + knockbackVector;
         stunned = true;
         stunHeight = rigidBody.position.y;
     }
