@@ -12,9 +12,11 @@ public class FishOnGroundScript : MonoBehaviour {
     public bool flying = true;
     public string direction = "";
     public GameObject fishOnGround;
+    public GameObject fishSpawner;
 
     void Awake()
     {
+        fishSpawner = GameObject.FindGameObjectWithTag("Spawner");
         fishRigidbody = GetComponent<Rigidbody>();
         if (fishRigidbody.velocity.x >= 0) direction = "right";
         else direction = "left";
@@ -33,7 +35,7 @@ public class FishOnGroundScript : MonoBehaviour {
         else direction = "left";
     }
 
-       private void OnTriggerEnter(Collider collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (pickUpAble && collision.gameObject.tag == "Player" && collision.GetComponentInParent<PlayerMovement>().hasFish == false)
         {
@@ -42,4 +44,12 @@ public class FishOnGroundScript : MonoBehaviour {
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Water")
+        {
+            fishSpawner.GetComponent<FishSpawnerScript>().fishOnScreen--;
+            Destroy(gameObject);
+        }
+    }
 }
