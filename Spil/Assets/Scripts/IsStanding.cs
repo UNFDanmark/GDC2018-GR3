@@ -39,6 +39,7 @@ public class IsStanding : MonoBehaviour {
 
     public void Ded()
     {
+        playermovement.playerAudioSource.PlayOneShot(playermovement.deathSound);
         print("Player " + playermovement.PlayerID + " died");
         GetComponentInParent<PlayerMovement>().lives--;
         if (GetComponentInParent<PlayerMovement>().lives <= 0)
@@ -53,10 +54,22 @@ public class IsStanding : MonoBehaviour {
     {
         print("Respawning player " + playermovement.PlayerID);
         int platform = Random.Range(0, 4);
-        if (platform == 0) GetComponentInParent<Transform>().position = new Vector3(6, 3.5f, 0);
-        else if (platform == 1) playerTransform.position = new Vector3(-6, 3.5f, 0);
-        else if (platform == 2) playerTransform.position = new Vector3(0, 8, 0);
-        else if (platform == 3) playerTransform.position = new Vector3(0, -3.5f, 0);
+        if (platform == 0)
+        {
+            playerTransform.position = new Vector3(6, 3.5f, 0);
+        }
+        else if (platform == 1)
+        {
+            playerTransform.position = new Vector3(-6, 3.5f, 0);
+        }
+        else if (platform == 2)
+        {
+            playerTransform.position = new Vector3(0, 8, 0);
+        }
+        else if (platform == 3)
+        {
+            playerTransform.position = new Vector3(0, 0, 0);
+        }
         gameObject.GetComponentInParent<Rigidbody>().velocity = new Vector3(0, 0, 0);
     }
 }

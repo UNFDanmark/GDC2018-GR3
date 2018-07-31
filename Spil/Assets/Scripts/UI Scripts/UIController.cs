@@ -16,6 +16,7 @@ public class UIController : MonoBehaviour {
     public GameObject[] p2HP = new GameObject[3];
     public GameObject[] p1ded = new GameObject[3];
     public GameObject[] p2ded = new GameObject[3];
+    public GameObject soundPlayer;
 
     void Awake()
     {
@@ -36,6 +37,7 @@ public class UIController : MonoBehaviour {
         {
             winner = livingPlayers[0];
             winScreen.text = "Player " + winner + " wins";
+            soundPlayer.GetComponent<SoundPlayerScript>().WanSound();
         }
         else if (livingPlayers.Count == 0)
         {

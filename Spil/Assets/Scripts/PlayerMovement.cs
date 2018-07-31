@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip hop1;
     public AudioClip hitting;
     public AudioClip getHit;
+    public AudioClip deathSound;
     public GameObject fishMan;
     public Animator animator;
     public float crossFadeTime = 0.1f;
@@ -146,6 +147,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Move(float axis, float accelSpeed)
     {
+        if(axis != 0 && groundDetector.onGround)
+        {
+            animator.SetBool("IsMooving", true);
+        }
+        else animator.SetBool("IsMooving", false);
         float xChange = axis * accelSpeed;
         //Checks if accelleration exceeds maximum in the given direction
         if ((rigidBody.velocity.x > MaxSpeed && xChange > 0) || (rigidBody.velocity.x < -MaxSpeed && xChange < 0))
@@ -161,6 +167,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
+        animator.CrossFade("Jump", 0.1f);
         canAirjump = true;
         rigidBody.velocity = new Vector3 (rigidBody.velocity.x, jumpHeight , rigidBody.velocity.z);
     }
@@ -169,6 +176,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (hasFish)
         {
+            animator.CrossFade("Throw", 0.1f);
             hasFish = false;
             GameObject thrownFish = Instantiate(fishPrefab);
             float x;
@@ -182,11 +190,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Hit()
     {
+        animator.CrossFade("Hit", 0.05f);
         meleeFish.GetComponent<MeleeFishScript>().hitting = true;
     }
 
     public void Knockback(float strength, string direction)
     {
+        playerAudioSource.PlayOneShot(getHit);
         int xModifyer = 1;
         if (direction == "left") xModifyer = -1;
         float knockbackMultiplier = (damageTaken + 1) * damageMultiplier;
