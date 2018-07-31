@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2f35dc63d306d7c409715a18c3adb894
+guid: 67e827e47d80f8441aa3704f835cc206
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -8,7 +8,7 @@ ModelImporter:
     2100000: No Name
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Tube001
+    4300000: Log
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -40,7 +40,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: -48.32
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importVisibility: 1
@@ -63,8 +63,8 @@ ModelImporter:
     previousCalculatedGlobalScale: 1
     hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
-    normalSmoothAngle: 0
-    normalImportMode: 1
+    normalSmoothAngle: 60
+    normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
   importAnimation: 1

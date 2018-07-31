@@ -30,7 +30,7 @@ public class FishOnGroundScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (flying) transform.LookAt(transform.position + fishRigidbody.velocity);
+        /*if (flying) transform.LookAt(transform.position + fishRigidbody.velocity);*/
         if (fishRigidbody.velocity.x >= 0) direction = "right";
         else direction = "left";
     }
