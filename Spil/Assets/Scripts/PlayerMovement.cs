@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody rigidBody;
     public GameObject fishPrefab;
     public GameObject meleeFish;
+    public GameObject UIHandler;
     public Renderer seeFish;
     public CapsuleCollider touchFish;
 
@@ -32,13 +33,19 @@ public class PlayerMovement : MonoBehaviour
     public float timeSinceStunned = 0;
     public float stunHeight = 100;
     public float hitTimerStandard = 0.3f; //Remember that this is depending on the animation
-    public float hitTimer = 0f; 
+    public float hitTimer = 0f;
+    public AudioSource playerAudioSource;
+    public AudioClip hop0;
+    public AudioClip hop1;
+    public AudioClip hitting;
+    public AudioClip getHit;
 
     // Use this for initialization
     void Start () {
         //Players look towards the middle when spawning
         if (rigidBody.transform.position.x > 0) lastDirection = "right";
         else lastDirection = "left";
+        UIHandler.GetComponent<UIController>().livingPlayers.Add(PlayerID);
 	}
 
 
@@ -63,10 +70,15 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump" + PlayerID) && stunned == false)
         {
             //First jump
-            if (grounded > 0) Jump();
+            if (grounded > 0)
+            {
+                playerAudioSource.PlayOneShot(hop0);
+                Jump();
+            }
             //Double jump
             else if (canAirjump)
             {
+                playerAudioSource.PlayOneShot(hop1);
                 Jump();
                 canAirjump = false;
                 rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y * secondJumpMultiplier, rigidBody.velocity.z);
@@ -77,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetKeyDown(hitButton))
             {
+                playerAudioSource.PlayOneShot(hitting);
                 hitTimer = hitTimerStandard;
                 Hit();
                 meleeFish.GetComponent<MeleeFishScript>().hitting = true;
