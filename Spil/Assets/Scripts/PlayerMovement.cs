@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject UIHandler;
     public Renderer seeFish;
     public CapsuleCollider touchFish;
+    public IsStanding groundDetector;
 
     public float acceleration = 0.01f;
     public float MaxSpeed = 0.02f;
@@ -39,6 +40,9 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip hop1;
     public AudioClip hitting;
     public AudioClip getHit;
+    public GameObject fishMan;
+    public Animator animator;
+    public float crossFadeTime = 0.1f;
 
     // Use this for initialization
     void Start () {
@@ -55,8 +59,14 @@ public class PlayerMovement : MonoBehaviour
         //Set lastDirection to "left" or "right" when the buttons are pressed
         lastDirection = GetDirection(Input.GetAxis("Horizontal" + PlayerID));
         //Make handFish point the right direction
-        if (lastDirection == "right") meleeFish.transform.localPosition = new Vector3(0.65f, 0, 0);
-        else meleeFish.transform.localPosition = new Vector3(-0.65f, 0, 0);
+        if (lastDirection == "right")
+        {
+            fishMan.transform.eulerAngles = new Vector3(0, -90, 0);
+        }
+        else
+        {
+            fishMan.transform.eulerAngles = new Vector3(0, 90, 0);
+        }
         //Show your fishes!
         if (hasFish) seeFish.enabled = true;
         else seeFish.enabled = false;
@@ -116,7 +126,16 @@ public class PlayerMovement : MonoBehaviour
             Move(Input.GetAxis("Horizontal" + PlayerID), acceleration);
         }
     }
-    
+
+    /*private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Water" && groundDetector.isded == false)
+        {
+            print("yep");
+            groundDetector.Ded();
+        }
+    }*/
+
 
     string GetDirection(float number)
     {

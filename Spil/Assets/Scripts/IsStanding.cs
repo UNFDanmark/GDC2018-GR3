@@ -16,10 +16,6 @@ public class IsStanding : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (playermovement.grounded > 0) onGround = true;
-        if ((playerTransform.position.x < -15 || playerTransform.position.x > 15) && isded == false)
-        {
-            Ded();
-        }
         if (isded) playermovement.stunned = true; 
 	}
 
@@ -41,9 +37,26 @@ public class IsStanding : MonoBehaviour {
         if(bye.gameObject.tag == "Platform") playermovement.grounded--;
     }
 
-    void Ded()
+    public void Ded()
     {
-        isded = true;
-        UIHandler.GetComponent<UIController>().livingPlayers.Remove(GetComponentInParent<PlayerMovement>().PlayerID);
+        print("Player " + playermovement.PlayerID + " died");
+        GetComponentInParent<PlayerMovement>().lives--;
+        if (GetComponentInParent<PlayerMovement>().lives <= 0)
+        {
+            isded = true;
+            UIHandler.GetComponent<UIController>().livingPlayers.Remove(GetComponentInParent<PlayerMovement>().PlayerID);
+        }
+        else Respawn();
+    }
+
+    void Respawn()
+    {
+        print("Respawning player " + playermovement.PlayerID);
+        int platform = Random.Range(0, 4);
+        if (platform == 0) GetComponentInParent<Transform>().position = new Vector3(6, 3.5f, 0);
+        else if (platform == 1) playerTransform.position = new Vector3(-6, 3.5f, 0);
+        else if (platform == 2) playerTransform.position = new Vector3(0, 8, 0);
+        else if (platform == 3) playerTransform.position = new Vector3(0, -3.5f, 0);
+        gameObject.GetComponentInParent<Rigidbody>().velocity = new Vector3(0, 0, 0);
     }
 }
