@@ -16,6 +16,7 @@ public class UIController : MonoBehaviour {
     public GameObject[] p2HP = new GameObject[3];
     public GameObject[] p1ded = new GameObject[3];
     public GameObject[] p2ded = new GameObject[3];
+    public GameObject soundPlayer;
 
     void Awake()
     {
@@ -36,6 +37,7 @@ public class UIController : MonoBehaviour {
         {
             winner = livingPlayers[0];
             winScreen.text = "Player " + winner + " wins";
+            soundPlayer.GetComponent<SoundPlayerScript>().WanSound();
         }
         else if (livingPlayers.Count == 0)
         {
@@ -47,14 +49,8 @@ public class UIController : MonoBehaviour {
 
     void PrintDamageText()
     {
-        damage1.text = player1.damageTaken.ToString();
-        damage2.text = player2.damageTaken.ToString();
-        if (damage1.text.Length == 1) damage1.text += ".00";
-        else if (damage1.text.Length == 2) damage1.text += "00";
-        else if (damage1.text.Length == 3) damage1.text += "0";
-        if (damage2.text.Length == 1) damage2.text += ".00";
-        else if (damage2.text.Length == 2) damage2.text += "00";
-        else if (damage2.text.Length == 3) damage2.text += "0";
+        damage1.text = (player1.damageTaken * 100).ToString();
+        damage2.text = (player2.damageTaken * 100).ToString();
     }
 
     void ShowLives()
@@ -66,10 +62,20 @@ public class UIController : MonoBehaviour {
                 p1HP[life].SetActive(true);
                 p1ded[life].SetActive(false);
             }
+            else
+            {
+                p1HP[life].SetActive(false);
+                p1ded[life].SetActive(true);
+            }
             if (player2.lives > life)
             {
                 p2HP[life].SetActive(true);
                 p2ded[life].SetActive(false);
+            }
+            else
+            {
+                p2HP[life].SetActive(false);
+                p2ded[life].SetActive(true);
             }
         }
     }

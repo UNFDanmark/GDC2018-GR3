@@ -21,12 +21,12 @@ public class FreshFishScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (flying) transform.LookAt(transform.position + thisFish.velocity);
+        /*if (flying) transform.LookAt(transform.position + thisFish.velocity);*/
     }
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.tag == "Player" && ((collider.GetComponentInParent<PlayerMovement>().hasFish == false) || GetComponent<PlayerMovement>().hasFish == false))
+        if (collider.tag == "Player" && ((collider.GetComponentInParent<PlayerMovement>().hasFish == false)/* || GetComponent<PlayerMovement>().hasFish == false*/))
         {
             collider.GetComponentInParent<PlayerMovement>().hasFish = true;
             Destroy(gameObject);

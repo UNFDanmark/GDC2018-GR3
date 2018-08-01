@@ -25,9 +25,9 @@ GameObject:
   - component: {fileID: 64038788915791296}
   - component: {fileID: 54174969292793344}
   - component: {fileID: 114155036936759844}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: VanillaFreshFish
-  m_TagString: Untagged
+  m_TagString: Fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
