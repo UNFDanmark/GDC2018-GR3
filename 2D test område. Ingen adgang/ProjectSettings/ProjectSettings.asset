@@ -14,8 +14,8 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: DefaultCompany
   productName: "2D test omr\xE5de. Ingen adgang"
-  defaultCursor: {fileID: 0}
-  cursorHotspot: {x: 0, y: 0}
+  defaultCursor: {fileID: 2800000, guid: f493c72ec5a7fa9498b6ac0cd240895f, type: 3}
+  cursorHotspot: {x: 10, y: 10}
   m_SplashScreenBackgroundColor: {r: 0.12156863, g: 0.12681939, b: 0.13725491, a: 1}
   m_ShowUnitySplashScreen: 1
   m_ShowUnitySplashLogo: 1
